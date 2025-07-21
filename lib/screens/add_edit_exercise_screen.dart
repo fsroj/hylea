@@ -24,16 +24,21 @@ class _AddEditExerciseScreenState extends State<AddEditExerciseScreen> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _repetitionsController;
+  late TextEditingController _imageUrlController;
+  late TextEditingController _gifUrlController;
+  late TextEditingController _videoUrlController;
+  late TextEditingController _linkUrlController;
 
   @override
   void initState() {
     super.initState();
-    _nameController =
-        TextEditingController(text: widget.exercise?.name ?? '');
-    _descriptionController =
-        TextEditingController(text: widget.exercise?.description ?? '');
-    _repetitionsController = TextEditingController(
-        text: widget.exercise?.repetitionsPerSet.toString() ?? '');
+    _nameController = TextEditingController(text: widget.exercise?.name ?? '');
+    _descriptionController = TextEditingController(text: widget.exercise?.description ?? '');
+    _repetitionsController = TextEditingController(text: widget.exercise?.repetitionsPerSet.toString() ?? '');
+    _imageUrlController = TextEditingController(text: widget.exercise?.imageUrl ?? '');
+    _gifUrlController = TextEditingController(text: widget.exercise?.gifUrl ?? '');
+    _videoUrlController = TextEditingController(text: widget.exercise?.videoUrl ?? '');
+    _linkUrlController = TextEditingController(text: widget.exercise?.linkUrl ?? '');
   }
 
   @override
@@ -41,6 +46,10 @@ class _AddEditExerciseScreenState extends State<AddEditExerciseScreen> {
     _nameController.dispose();
     _descriptionController.dispose();
     _repetitionsController.dispose();
+    _imageUrlController.dispose();
+    _gifUrlController.dispose();
+    _videoUrlController.dispose();
+    _linkUrlController.dispose();
     super.dispose();
   }
 
@@ -50,6 +59,10 @@ class _AddEditExerciseScreenState extends State<AddEditExerciseScreen> {
       final String name = _nameController.text;
       final String description = _descriptionController.text;
       final int repetitions = int.parse(_repetitionsController.text);
+      final String? imageUrl = _imageUrlController.text.isNotEmpty ? _imageUrlController.text : null;
+      final String? gifUrl = _gifUrlController.text.isNotEmpty ? _gifUrlController.text : null;
+      final String? videoUrl = _videoUrlController.text.isNotEmpty ? _videoUrlController.text : null;
+      final String? linkUrl = _linkUrlController.text.isNotEmpty ? _linkUrlController.text : null;
 
       if (widget.exercise == null) {
         // Add new exercise
@@ -59,6 +72,10 @@ class _AddEditExerciseScreenState extends State<AddEditExerciseScreen> {
           description: description,
           repetitionsPerSet: repetitions,
           mode: widget.mode,
+          imageUrl: imageUrl,
+          gifUrl: gifUrl,
+          videoUrl: videoUrl,
+          linkUrl: linkUrl,
         );
         appData.addExercise(newExercise);
       } else {
@@ -66,6 +83,10 @@ class _AddEditExerciseScreenState extends State<AddEditExerciseScreen> {
         widget.exercise!.name = name;
         widget.exercise!.description = description;
         widget.exercise!.repetitionsPerSet = repetitions;
+        widget.exercise!.imageUrl = imageUrl;
+        widget.exercise!.gifUrl = gifUrl;
+        widget.exercise!.videoUrl = videoUrl;
+        widget.exercise!.linkUrl = linkUrl;
         appData.updateExercise(widget.exercise!);
       }
       Navigator.pop(context);
@@ -159,6 +180,46 @@ class _AddEditExerciseScreenState extends State<AddEditExerciseScreen> {
                   }
                   return null;
                 },
+              ),
+              const SizedBox(height: 24),
+              TextFormField(
+                controller: _imageUrlController,
+                decoration: InputDecoration(
+                  labelText: 'URL de Imagen (opcional)',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.image),
+                ),
+                keyboardType: TextInputType.url,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _gifUrlController,
+                decoration: InputDecoration(
+                  labelText: 'URL de GIF (opcional)',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.gif),
+                ),
+                keyboardType: TextInputType.url,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _videoUrlController,
+                decoration: InputDecoration(
+                  labelText: 'URL de Video (opcional)',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.video_library),
+                ),
+                keyboardType: TextInputType.url,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _linkUrlController,
+                decoration: InputDecoration(
+                  labelText: 'URL de Enlace (opcional)',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.link),
+                ),
+                keyboardType: TextInputType.url,
               ),
               const SizedBox(height: 24),
               ElevatedButton(

@@ -7,6 +7,10 @@ class Exercise {
   String description;
   int repetitionsPerSet;
   ExerciseMode mode;
+  String? imageUrl;
+  String? gifUrl;
+  String? videoUrl;
+  String? linkUrl;
 
   Exercise({
     required this.id,
@@ -14,6 +18,10 @@ class Exercise {
     required this.description,
     required this.repetitionsPerSet,
     required this.mode,
+    this.imageUrl,
+    this.gifUrl,
+    this.videoUrl,
+    this.linkUrl,
   });
 
   // Factory constructor to create an Exercise from a map
@@ -24,7 +32,11 @@ class Exercise {
       description: map['description'],
       repetitionsPerSet: map['repetitionsPerSet'],
       mode: ExerciseMode.values.firstWhere(
-          (e) => e.toString().split('.').last == map['mode']),
+        (e) => e.toString().split('.').last == map['mode']),
+      imageUrl: map['imageUrl'],
+      gifUrl: map['gifUrl'],
+      videoUrl: map['videoUrl'],
+      linkUrl: map['linkUrl'],
     );
   }
 
@@ -36,6 +48,10 @@ class Exercise {
       'description': description,
       'repetitionsPerSet': repetitionsPerSet,
       'mode': mode.toString().split('.').last,
+      'imageUrl': imageUrl,
+      'gifUrl': gifUrl,
+      'videoUrl': videoUrl,
+      'linkUrl': linkUrl,
     };
   }
 }
